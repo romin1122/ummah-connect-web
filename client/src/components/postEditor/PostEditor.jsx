@@ -49,6 +49,7 @@ function PostEditor() {
             onChange={(e) => {
               setDescription(e.target.value);
             }}
+            disabled={mutation.isLoading}
           ></textarea>
         </div>
         {file && (
@@ -74,6 +75,7 @@ function PostEditor() {
                 console.log(e);
                 setFile(e.target.files[0]);
               }}
+              disabled={mutation.isLoading}
             />
             <label htmlFor='file'>
               <AddPhotoAlternateOutlinedIcon />

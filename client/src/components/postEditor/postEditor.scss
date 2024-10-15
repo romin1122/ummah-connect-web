@@ -46,6 +46,10 @@
           &::-webkit-scrollbar {
             display: none;
           }
+
+          &:disabled {
+            opacity: 0.8;
+          }
         }
       }
 
