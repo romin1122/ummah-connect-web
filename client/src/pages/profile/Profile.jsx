@@ -8,7 +8,7 @@ import Place from '@mui/icons-material/Place';
 import Language from '@mui/icons-material/Language';
 import EmailOutlined from '@mui/icons-material/EmailOutlined';
 import MoreVert from '@mui/icons-material/MoreVert';
-import Posts from '../../components/posts/Posts';
+import ProfilePosts from '../../components/profilePosts/ProfilePosts';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { makeRequest } from '../../axiosfunctions';
 import { useLocation } from 'react-router-dom';
@@ -18,7 +18,6 @@ import Update from '../../components/update/Update';
 
 const Profile = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
-
   const { currentUser } = useContext(AuthContext);
 
   const userId = Number(useLocation().pathname.split('/')[2]);
@@ -143,7 +142,7 @@ const Profile = () => {
           </div>
         </div>
 
-        <Posts userId={userId} />
+        <ProfilePosts userId={userId} />
       </div>
 
       {openUpdate && <Update setOpenUpdate={setOpenUpdate} />}

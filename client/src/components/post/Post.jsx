@@ -74,7 +74,7 @@ function Post({ postId, userId }) {
           <MoreHoriz />
         </div>
         <div className='content'>
-          {post.description && <p>{post.description}</p>}
+          <pre>{post.description && <p>{post.description}</p>}</pre>
           {post.img && <img src={post.img} alt='' />}
         </div>
         <div className='info'>

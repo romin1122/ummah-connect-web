@@ -24,7 +24,7 @@ function PostEditor() {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['posts']);
+        queryClient.invalidateQueries(['homePosts']);
         setDescription('');
         setFile(null);
       },

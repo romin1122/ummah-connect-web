@@ -1,13 +1,16 @@
 import { makeRequest } from '../../axiosfunctions';
 import { useQuery } from 'react-query';
 import Post from '../post/Post';
-import './posts.scss';
+import '../posts/posts.scss';
 
-function Posts() {
-  const { isLoading, error, data } = useQuery(['homePosts'], async () => {
-    const res = await makeRequest.get('/posts');
-    return res.data;
-  });
+function ProfilePosts({ userId }) {
+  const { isLoading, error, data } = useQuery(
+    ['profilePosts', userId],
+    async () => {
+      const res = await makeRequest.get('/posts/user/' + userId);
+      return res.data;
+    }
+  );
 
   return (
     <div className='posts'>
@@ -24,4 +27,4 @@ function Posts() {
   );
 }
 
-export default Posts;
+export default ProfilePosts;

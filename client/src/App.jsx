@@ -29,6 +29,7 @@ function App() {
     useEffect(() => {
       window.scrollTo(0, 0);
     }, [pathname]);
+
     return (
       <div className={`theme-${darkMode ? 'dark' : 'light'}`}>
         <NavBar />
