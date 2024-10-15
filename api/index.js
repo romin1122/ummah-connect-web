@@ -28,7 +28,7 @@ const upload = multer({ storage: storage });
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'http://ummahconnect.xyz/'],
     credentials: true,
   })
 );
@@ -102,7 +102,10 @@ app.use((_, res) => {
   });
 });
 
-app.listen(8000, (err) => {
+app.listen(process.env.NODE_ENV == 'production' ? 80 : 8000, (err) => {
   if (err) console.error(err);
-  console.log('Server started listening on port 8000');
+  console.log(
+    'Server started listening on port ' +
+      Number(process.env.NODE_ENV == 'production' ? 80 : 8000)
+  );
 });
