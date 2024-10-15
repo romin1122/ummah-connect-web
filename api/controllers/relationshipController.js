@@ -1,9 +1,8 @@
 import { db } from '../db.js';
 
 export const updateRelationship = (req, res) => {
-  // Do validation of data later as well as post comment login register validation
   const followed = req.body.followed;
-  console.log(followed);
+
   if (followed) {
     const q = `INSERT INTO relationships (followerUserId, followedUserId) VALUES (?,(SELECT id FROM users WHERE username = ?))`;
 

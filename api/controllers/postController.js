@@ -16,7 +16,13 @@ export const getPosts = (req, res) => {
 
   db.query(q, [req.user.id, req.user.id], (err, data) => {
     if (err) res.status(500).json(err);
-    return res.status(200).json(data);
+
+    return res.status(200).json(
+      data.map((each) => {
+        const { createdAt, ...others } = each;
+        return others;
+      })
+    );
   });
 };
 
@@ -28,13 +34,19 @@ export const getUserPosts = (req, res) => {
 
   db.query(q, [req.params.username], (err, data) => {
     if (err) res.status(500).json(err);
-    return res.status(200).json(data);
+
+    return res.status(200).json(
+      data.map((each) => {
+        const { createdAt, ...others } = each;
+        return others;
+      })
+    );
   });
 };
 
 export const getPost = (req, res) => {
   // https://stackoverflow.com/questions/40286026/mysql-query-get-current-users-posts-and-the-users-hes-following-posts
-  const q = `SELECT p.*, name, profilePic, username,
+  const q = `SELECT p.id, p.description, p.img, p.createdAt, name, profilePic, username,
                   (SELECT COUNT(*) AS likes FROM likes AS l WHERE l.postId = p.id) AS likes, 
                   (SELECT COUNT(*) != 0 FROM likes AS l WHERE l.postId = p.id AND l.userId = ?) AS liked 
                   FROM posts AS p 

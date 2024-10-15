@@ -13,17 +13,6 @@ export const getComments = (req, res) => {
   });
 };
 
-// export const totalComments = (req, res) => {
-//   const q = `SELECT COUNT(*) AS total FROM comments AS c
-//              JOIN users AS u ON (u.id = c.userId)
-//              WHERE c.postId = ?`;
-
-//   db.query(q, [req.query.postId], (err, data) => {
-//     if (err) res.status(500).json(err);
-//     return res.status(200).json(data[0].total);
-//   });
-// };
-
 export const addComment = (req, res) => {
   if (!req.body.description || !req.body.description.trim())
     return res.status(403).json('Text cannot be empty');
