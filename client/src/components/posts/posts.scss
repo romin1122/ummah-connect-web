@@ -1,0 +1,28 @@
+@import '../../style.scss';
+
+.posts {
+  @include themify($themes) {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    // @include tablet {
+    // }
+
+    @include tablet {
+      gap: 20px;
+    }
+
+    @include mobile {
+      gap: 20px;
+    }
+
+    .loading {
+      color: themed('textColor');
+    }
+
+    .error {
+      color: red;
+    }
+  }
+}

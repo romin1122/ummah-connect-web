@@ -1,0 +1,112 @@
+@import '../../style.scss';
+
+.postEditor {
+  @include themify($themes) {
+    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    background-color: white;
+
+    margin-bottom: 25px;
+    padding: 20px;
+    border-radius: 20px;
+
+    background-color: themed('bg');
+    color: themed('textColor');
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      border-radius: 15px;
+      min-height: fit-content;
+      .left {
+        display: flex;
+        flex: 5;
+        gap: 10px;
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        textarea {
+          border: none;
+          width: 100%;
+          margin: 10px 20px 10px 0;
+          outline: none;
+          font: inherit;
+          font-size: 100%;
+          background-color: themed('bg');
+          color: themed('textColor');
+          min-height: 100%;
+
+          resize: none;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+      }
+
+      .right {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 10px;
+        img {
+          width: 80px;
+          height: 80px;
+          object-fit: cover;
+        }
+      }
+    }
+
+    hr {
+      margin: 20px;
+      border: none;
+      height: 0.5px;
+      background-color: themed('border');
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 10px;
+      .left {
+        display: flex;
+        gap: 10px;
+        .item {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+
+          font-size: 14px;
+
+          label {
+            display: flex;
+            align-items: center;
+          }
+          span {
+          }
+        }
+      }
+
+      .right {
+        button {
+          background-color: #5271ff;
+          border: none;
+          padding: 8px;
+          color: white;
+          cursor: pointer;
+          font-weight: bold;
+          border-radius: 2px;
+
+          &:disabled {
+            filter: brightness(80%);
+          }
+        }
+      }
+    }
+  }
+}
