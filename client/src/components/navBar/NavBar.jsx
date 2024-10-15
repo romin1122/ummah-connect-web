@@ -19,7 +19,7 @@ function NavBar() {
     <div className='navBar'>
       <div className='left'>
         <Link to='/' style={{ textDecoration: 'none' }}>
-          <span>Safe Social</span>
+          <span>Ummah Connect</span>
         </Link>
         {darkMode ? (
           <WbSunnyOutlinedIcon onClick={toggle} />

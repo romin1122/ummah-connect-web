@@ -37,7 +37,7 @@ const Register = () => {
     <div className='register'>
       <div className='card'>
         <div className='left'>
-          <h1>Safe Social.</h1>
+          <h1>Ummah Connect.</h1>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
             cupiditate dolores repudiandae voluptas veritatis nam, maiores nihil
