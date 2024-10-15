@@ -17,7 +17,9 @@ function Posts() {
         <div className='error'>{error}</div>
       ) : (
         data.map((post) => {
-          return <Post postId={post.id} userId={post.userId} key={post.id} />;
+          return (
+            <Post postId={post.id} username={post.username} key={post.id} />
+          );
         })
       )}
     </div>

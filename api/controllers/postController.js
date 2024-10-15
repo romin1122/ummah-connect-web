@@ -3,11 +3,11 @@ import moment from 'moment';
 
 export const getPosts = (req, res) => {
   // https://stackoverflow.com/questions/40286026/mysql-query-get-current-users-posts-and-the-users-hes-following-posts
-  const q = `(SELECT p.id, p.createdAt, p.userId FROM posts AS p 
+  const q = `(SELECT p.id, p.createdAt, u.username FROM posts AS p 
                 INNER JOIN users AS u ON u.id = p.userId 
                 WHERE u.id = ?
               ) UNION (
-                SELECT p.id, p.createdAt, p.userId FROM posts AS p 
+                SELECT p.id, p.createdAt, u.username FROM posts AS p 
                 INNER JOIN relationships AS r ON p.userId = r.followedUserId 
                 INNER JOIN users AS u ON p.userId = u.id
                 WHERE r.followerUserId = ?
@@ -21,12 +21,12 @@ export const getPosts = (req, res) => {
 };
 
 export const getUserPosts = (req, res) => {
-  const q = `SELECT p.id, p.createdAt, p.userId FROM posts AS p 
+  const q = `SELECT p.id, p.createdAt, u.username FROM posts AS p 
               INNER JOIN users AS u ON u.id = p.userId 
-              WHERE u.id = ?
+              WHERE u.username = ?
               ORDER BY createdAt DESC;`;
 
-  db.query(q, [req.params.userId], (err, data) => {
+  db.query(q, [req.params.username], (err, data) => {
     if (err) res.status(500).json(err);
     return res.status(200).json(data);
   });
@@ -34,15 +34,15 @@ export const getUserPosts = (req, res) => {
 
 export const getPost = (req, res) => {
   // https://stackoverflow.com/questions/40286026/mysql-query-get-current-users-posts-and-the-users-hes-following-posts
-  const q = `SELECT p.*, name, profilePic, 
+  const q = `SELECT p.*, name, profilePic, username,
                   (SELECT COUNT(*) AS likes FROM likes AS l WHERE l.postId = p.id) AS likes, 
                   (SELECT COUNT(*) != 0 FROM likes AS l WHERE l.postId = p.id AND l.userId = ?) AS liked 
                   FROM posts AS p 
                 INNER JOIN users AS u ON u.id = p.userId 
-                WHERE u.id = ? AND p.id = ?;
+                WHERE u.username = ? AND p.id = ?;
               `;
-  const posterId = req.body.userId;
-  db.query(q, [req.user.id, posterId, req.body.postId], (err, data) => {
+  const posterUsername = req.body.username;
+  db.query(q, [req.user.id, posterUsername, req.body.postId], (err, data) => {
     if (err) res.status(500).json(err);
     return res.status(200).json(data[0]);
   });

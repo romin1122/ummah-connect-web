@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 router.get('/', getPosts);
-router.get('/user/:userId', getUserPosts);
+router.get('/user/:username', getUserPosts);
 router.post('/post', getPost);
 // router.post('/add', addPost); Add route is handled in index.js
 router.delete('/delete', deletePost);

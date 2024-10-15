@@ -11,7 +11,7 @@ import moment from 'moment';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { makeRequest } from '../../axiosfunctions';
 
-function Post({ postId, userId }) {
+function Post({ postId, username }) {
   const [commentOpen, setCommentOpen] = useState(false);
 
   const {
@@ -19,7 +19,7 @@ function Post({ postId, userId }) {
     postError,
     data: post,
   } = useQuery(['posts', postId], async () => {
-    let res = await makeRequest.post('/posts/post', { userId, postId });
+    let res = await makeRequest.post('/posts/post', { username, postId });
     return res.data;
   });
 
@@ -55,7 +55,7 @@ function Post({ postId, userId }) {
         <div className='user'>
           <div className='userInfo'>
             <Link
-              to={`/profile/${post.userId}`}
+              to={`/profile/${post.username}`}
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
               <img src={post.profilePic} alt='' />
@@ -63,7 +63,7 @@ function Post({ postId, userId }) {
 
             <div className='details'>
               <Link
-                to={`/profile/${post.userId}`}
+                to={`/profile/${post.username}`}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <span className='name'>{post.name}</span>

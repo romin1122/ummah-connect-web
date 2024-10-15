@@ -3,11 +3,11 @@ import { useQuery } from 'react-query';
 import Post from '../post/Post';
 import '../posts/posts.scss';
 
-function ProfilePosts({ userId }) {
+function ProfilePosts({ username }) {
   const { isLoading, error, data } = useQuery(
-    ['profilePosts', userId],
+    ['profilePosts', username],
     async () => {
-      const res = await makeRequest.get('/posts/user/' + userId);
+      const res = await makeRequest.get('/posts/user/' + username);
       return res.data;
     }
   );
@@ -20,7 +20,9 @@ function ProfilePosts({ userId }) {
         <div className='error'>{error}</div>
       ) : (
         data.map((post) => {
-          return <Post postId={post.id} userId={post.userId} key={post.id} />;
+          return (
+            <Post postId={post.id} username={post.username} key={post.id} />
+          );
         })
       )}
     </div>

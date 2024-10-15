@@ -20,23 +20,14 @@ const Profile = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
   const { currentUser } = useContext(AuthContext);
 
-  const userId = Number(useLocation().pathname.split('/')[2]);
-  if (isNaN(userId)) {
-    return (
-      <div className='profile'>
-        <div className='error'>
-          <h1>Error 404. Invalid userId</h1>
-        </div>
-      </div>
-    );
-  }
+  const username = useLocation().pathname.split('/')[2];
 
   const {
     isLoading,
     error,
     data: userData,
-  } = useQuery(['user', userId], async () => {
-    let res = await makeRequest.get('/users/find/' + userId);
+  } = useQuery(['user', username], async () => {
+    let res = await makeRequest.get('/users/find/' + username);
     return res.data;
   });
 
@@ -45,13 +36,13 @@ const Profile = () => {
     () => {
       const res = makeRequest.post('/relationships/update', {
         followed: !userData.followed,
-        followedUserId: userId,
+        followedUsername: userData.username,
       });
       return res;
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['user', userId]);
+        queryClient.invalidateQueries(['user', username]);
       },
     }
   );
@@ -65,6 +56,22 @@ const Profile = () => {
     e.preventDefault();
     setOpenUpdate(true);
   };
+
+  if (isLoading) {
+    // Just show an error dialog instead
+    return <div className='profile'>Loading...</div>;
+  }
+
+  if (error) {
+    // Just show an error dialog instead
+    return (
+      <div className='profile'>
+        <div className='error'>
+          <h1>{error.message}</h1>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='profile'>
@@ -121,7 +128,7 @@ const Profile = () => {
               </div>
             </div>
 
-            {currentUser.id != userId ? (
+            {currentUser.username != userData.username ? (
               <button
                 onClick={handleFollow}
                 disabled={isLoading || error || mutation.isLoading}
@@ -142,7 +149,7 @@ const Profile = () => {
           </div>
         </div>
 
-        <ProfilePosts userId={userId} />
+        <ProfilePosts username={username} />
       </div>
 
       {openUpdate && <Update setOpenUpdate={setOpenUpdate} />}
