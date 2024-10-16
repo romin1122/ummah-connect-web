@@ -1,4 +1,4 @@
-import { db } from '../db.js';
+import { db } from '../helpers/db.js';
 import moment from 'moment';
 
 export const getPosts = (req, res) => {
@@ -61,6 +61,9 @@ export const getPost = (req, res) => {
 };
 
 export const addPost = async (req, res) => {
+  const file = req.file;
+  if (file != undefined) req.uploadedImg = file.filename;
+
   const { description } = req.body;
   if (
     (!description || (description && !req.body.description.trim())) &&

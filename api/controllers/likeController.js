@@ -1,4 +1,4 @@
-import { db } from '../db.js';
+import { db } from '../helpers/db.js';
 
 export const updateLike = (req, res) => {
   // Do validation of data later as well as post comment login register validation

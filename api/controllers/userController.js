@@ -1,4 +1,4 @@
-import { db } from '../db.js';
+import { db } from '../helpers/db.js';
 
 export const getUser = (req, res) => {
   const username = req.params.username;
