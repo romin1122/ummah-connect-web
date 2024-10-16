@@ -2,7 +2,7 @@ import { db } from '../db.js';
 import moment from 'moment';
 
 export const getComments = (req, res) => {
-  const q = `SELECT c.*, name, profilePic FROM comments AS c
+  const q = `SELECT c.id, c.description, c.createdAt, c.postId, name, profilePic, username FROM comments AS c
              JOIN users AS u ON (u.id = c.userId) 
              WHERE c.postId = ?
              ORDER BY createdAt DESC;`;

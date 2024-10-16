@@ -58,14 +58,14 @@ function Comments({ postId }) {
         : data.map((comment) => (
             <div className='comment' key={comment.id}>
               <Link
-                to={`/profile/${comment.userId}`}
+                to={`/profile/${comment.username}`}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <img src={comment.profilePic} alt='' />
               </Link>
               <div className='info'>
                 <Link
-                  to={`/profile/${comment.userId}`}
+                  to={`/profile/${comment.username}`}
                   style={{ textDecoration: 'none', color: 'inherit' }}
                 >
                   <span>{comment.name}</span>
