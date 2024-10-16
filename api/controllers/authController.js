@@ -1,6 +1,9 @@
 import { db } from '../db.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const register = (req, res) => {
   const q = 'SELECT * FROM users WHERE username = ?';
@@ -44,7 +47,7 @@ export const login = (req, res) => {
     if (!checkPassword)
       return res.status(400).json('Wrong username or password!');
 
-    const token = jwt.sign({ id: data[0].id }, 'veryveryveeerysecretkey');
+    const token = jwt.sign({ id: data[0].id }, process.env.ACCESS_TOKEN_KEY);
 
     const { password, id, ...others } = data[0];
     res

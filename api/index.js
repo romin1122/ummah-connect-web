@@ -11,6 +11,8 @@ import jwt from 'jsonwebtoken';
 import path from 'path';
 import multer from 'multer';
 import { addPost } from './controllers/postController.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 
@@ -40,7 +42,7 @@ app.use('/api/users/validate', (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(200).json(false);
 
-  jwt.verify(token, 'veryveryveeerysecretkey', (err, userInfo) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, userInfo) => {
     if (err) return res.status(200).json(false);
     else {
       res.status(200).json(true);
@@ -52,7 +54,7 @@ const validator = (req, res, next) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json('Not logged in!');
 
-  jwt.verify(token, 'veryveryveeerysecretkey', (err, userInfo) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_KEY, (err, userInfo) => {
     if (err)
       return res
         .clearCookie('accessToken', {
