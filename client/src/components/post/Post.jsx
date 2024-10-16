@@ -74,7 +74,11 @@ function Post({ postId, username }) {
           <MoreHoriz />
         </div>
         <div className='content'>
-          <pre>{post.description && <p>{post.description.trim()}</p>}</pre>
+          {post.description && (
+            <p>
+              <pre>{post.description.trim()}</pre>
+            </p>
+          )}
           {post.img && <img src={post.img} alt='' />}
         </div>
         <div className='info'>

@@ -42,12 +42,15 @@ function Comments({ postId }) {
     <div className='comments'>
       <div className='write'>
         <img src={currentUser.profilePic} alt='' />
-        <input
-          type='text'
+
+        <textarea
           placeholder='Write a comment'
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+          disabled={mutation.isLoading}
+        ></textarea>
         <button onClick={handleClick}>Send</button>
       </div>
 
@@ -70,7 +73,9 @@ function Comments({ postId }) {
                 >
                   <span>{comment.name}</span>
                 </Link>
-                <p>{comment.description}</p>
+                <p>
+                  <pre>{comment.description}</pre>
+                </p>
               </div>
               <div className='date'>{moment(comment.createdAt).fromNow()}</div>
             </div>
