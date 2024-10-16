@@ -73,12 +73,15 @@
           font-weight: 600;
         }
 
-        p {
+        pre {
           color: themed('textColorSoft');
-
-          pre {
-            line-height: 130%;
-          }
+          line-height: 130%;
+          white-space: pre-wrap;
+          white-space: -moz-pre-wrap;
+          white-space: -pre-wrap;
+          white-space: -o-pre-wrap;
+          word-wrap: break-word;
+          word-break: keep-all;
         }
       }
 
