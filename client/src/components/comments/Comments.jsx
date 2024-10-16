@@ -74,7 +74,7 @@ function Comments({ postId }) {
                   <span>{comment.name}</span>
                 </Link>
                 <p>
-                  <pre>{comment.description}</pre>
+                  <pre>{comment.description.trim()}</pre>
                 </p>
               </div>
               <div className='date'>{moment(comment.createdAt).fromNow()}</div>
