@@ -116,18 +116,21 @@ const Profile = () => {
           <div className='center'>
             <span>{isLoading ? '...' : userData.name}</span>
             <div className='info'>
-              <div className='item'>
-                <Place />
-                <span>
-                  {!isLoading && userData.city ? userData.city : 'NA'}
-                </span>
-              </div>
-              <div className='item'>
-                <Language />
-                <span>romin1122.dev</span>
-              </div>
+              {userData.city && (
+                <div className='item'>
+                  <Place />
+                  <span>
+                    {!isLoading && userData.city ? userData.city : 'NA'}
+                  </span>
+                </div>
+              )}
+              {userData.website && (
+                <div className='item'>
+                  <Language />
+                  <span>{userData.website}</span>
+                </div>
+              )}
             </div>
-
             {currentUser.username != userData.username ? (
               <button
                 onClick={handleFollow}
@@ -152,7 +155,7 @@ const Profile = () => {
         <ProfilePosts username={username} />
       </div>
 
-      {openUpdate && <Update setOpenUpdate={setOpenUpdate} />}
+      {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={userData} />}
     </div>
   );
 };

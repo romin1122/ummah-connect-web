@@ -12,7 +12,7 @@ const router = express.Router();
 router.get('/', getPosts);
 router.get('/user/:username', getUserPosts);
 router.post('/post', getPost);
-router.post('/add', singleFileUploader('file'), addPost);
+router.post('/add', singleFileUploader, addPost);
 router.delete('/delete', deletePost);
 
 export default router;

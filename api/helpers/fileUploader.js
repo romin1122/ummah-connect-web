@@ -11,8 +11,37 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+function checkFileType(req, file, cb) {
+  const filetypes = /jpeg|jpg|png/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
 
-export const singleFileUploader = (name) => {
-  return upload.single(name);
-};
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    cb('Error: Images only! (jpeg, jpg, png)');
+  }
+}
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    files: 1,
+    fileSize: 1024 * 1024 * 5, // 5MB size limit
+  },
+  fileFilter: checkFileType,
+});
+
+export const singleFileUploader = upload.single('file');
+
+export const multipleFilesUploader = multer({
+  storage: storage,
+  limits: {
+    files: 2,
+    fileSize: 1024 * 1024 * 5, // 5MB size limit
+  },
+  fileFilter: checkFileType,
+}).fields([
+  { name: 'profilePic', maxCount: 1 },
+  { name: 'coverPic', maxCount: 1 },
+]);

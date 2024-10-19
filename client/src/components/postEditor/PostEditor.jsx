@@ -72,8 +72,11 @@ function PostEditor() {
               id='file'
               style={{ display: 'none' }}
               onChange={(e) => {
-                console.log(e);
-                setFile(e.target.files[0]);
+                if (e.target.files[0].size <= 5242880)
+                  setFile(e.target.files[0]);
+                else {
+                  alert('Image size is limited to 5MB');
+                }
               }}
               disabled={mutation.isLoading}
             />
