@@ -11,7 +11,7 @@ import MoreVert from '@mui/icons-material/MoreVert';
 import ProfilePosts from '../../components/profilePosts/ProfilePosts';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { makeRequest } from '../../axiosfunctions';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 import Update from '../../components/update/Update';
@@ -20,7 +20,7 @@ const Profile = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
   const { currentUser } = useContext(AuthContext);
 
-  const username = useLocation().pathname.split('/')[2];
+  const { username } = useParams();
 
   const {
     isLoading,

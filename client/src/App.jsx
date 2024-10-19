@@ -17,6 +17,7 @@ import Profile from './pages/profile/Profile';
 import { useContext, useEffect } from 'react';
 import { DarkModeContext } from './context/darkModeContext';
 import { AuthContext } from './context/authContext';
+import Post from './pages/post/Post';
 // import Test from './Test';
 
 function App() {
@@ -66,7 +67,11 @@ function App() {
           element: <Home />,
         },
         {
-          path: '/profile/:id',
+          path: '/post/:postId',
+          element: <Post />,
+        },
+        {
+          path: '/profile/:username',
           element: <Profile />,
         },
       ],
