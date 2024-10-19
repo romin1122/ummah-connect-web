@@ -91,14 +91,13 @@ export const login = (req, res) => {
     if (!checkPassword)
       return res.status(400).json('Wrong username or password!');
 
-    const token = jwt.sign({ id: data[0].id }, process.env.ACCESS_TOKEN_KEY, {
-      expiresIn: '30d',
-    });
+    const token = jwt.sign({ id: data[0].id }, process.env.ACCESS_TOKEN_KEY);
 
     const { password, id, ...others } = data[0];
     return res
       .cookie('accessToken', token, {
         httpOnly: true,
+        maxAge: 60 * 60 * 24 * 30,
       })
       .status(200)
       .json(others);
