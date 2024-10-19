@@ -5,6 +5,34 @@ import { useContext, useState } from 'react';
 import axios from 'axios';
 import { makeRequest } from '../../axiosfunctions';
 
+const validateName = (name) => {
+  return name && name.trim().length > 0 && /^[a-zA-Z ]+$/.test(name);
+};
+
+const validateEmail = (email) => {
+  return (
+    email &&
+    email.trim().length > 0 &&
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      email
+    )
+  );
+};
+
+const validateUsername = (username) => {
+  return (
+    username &&
+    username.trim().length > 0 &&
+    /^(?=.{3,32}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/.test(username)
+  );
+};
+
+const validatePassword = (password) => {
+  return (
+    password && password.trim().length >= 8 && password.trim().length <= 32
+  );
+};
+
 const Register = () => {
   const { currentUser, login } = useContext(AuthContext);
 
@@ -17,7 +45,29 @@ const Register = () => {
   const [err, setErr] = useState(null);
 
   const handleChange = (e) => {
+    setErr(null);
+
+    if (e.target.name == 'username' && validateUsername(e.target.value))
+      e.target.classList.remove('invalidInput');
+    if (e.target.name == 'name' && validateName(e.target.value))
+      e.target.classList.remove('invalidInput');
+    if (e.target.name == 'email' && validateEmail(e.target.value))
+      e.target.classList.remove('invalidInput');
+    if (e.target.name == 'password' && validatePassword(e.target.value))
+      e.target.classList.remove('invalidInput');
+
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleBlur = (e) => {
+    if (e.target.name == 'username' && !validateUsername(e.target.value))
+      e.target.classList.add('invalidInput');
+    if (e.target.name == 'name' && !validateName(e.target.value))
+      e.target.classList.add('invalidInput');
+    if (e.target.name == 'email' && !validateEmail(e.target.value))
+      e.target.classList.add('invalidInput');
+    if (e.target.name == 'password' && !validatePassword(e.target.value))
+      e.target.classList.add('invalidInput');
   };
 
   const handleRegister = async (e) => {
@@ -29,7 +79,6 @@ const Register = () => {
 
     await login(inputs);
   };
-  console.log(err);
 
   if (currentUser) return <Navigate to='/' />;
 
@@ -57,27 +106,31 @@ const Register = () => {
               placeholder='Username'
               name='username'
               onChange={handleChange}
-            />
-            <input
-              type='email'
-              placeholder='Email'
-              name='email'
-              onChange={handleChange}
-            />
-            <input
-              type='password'
-              placeholder='Password'
-              name='password'
-              onChange={handleChange}
+              onBlur={handleBlur}
             />
             <input
               type='text'
               placeholder='Name'
               name='name'
               onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <input
+              type='email'
+              placeholder='Email'
+              name='email'
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <input
+              type='password'
+              placeholder='Password'
+              name='password'
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
 
-            {err && <span style={{ color: 'red' }}>err.data</span>}
+            {err && <span style={{ color: 'red' }}>{err.data}</span>}
 
             <button onClick={handleRegister}>Register</button>
           </form>

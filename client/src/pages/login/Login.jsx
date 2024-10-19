@@ -3,6 +3,20 @@ import './login.scss';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 
+const validateUsername = (username) => {
+  return (
+    username &&
+    username.trim().length > 0 &&
+    /^(?=.{3,32}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/.test(username)
+  );
+};
+
+const validatePassword = (password) => {
+  return (
+    password && password.trim().length >= 8 && password.trim().length <= 32
+  );
+};
+
 const Login = () => {
   //Temporary
   const { login } = useContext(AuthContext);
@@ -16,7 +30,21 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
+    setErr(null);
+
+    if (e.target.name == 'username' && validateUsername(e.target.value))
+      e.target.classList.remove('invalidInput');
+    if (e.target.name == 'password' && validatePassword(e.target.value))
+      e.target.classList.remove('invalidInput');
+
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleBlur = (e) => {
+    if (e.target.name == 'username' && !validateUsername(e.target.value))
+      e.target.classList.add('invalidInput');
+    if (e.target.name == 'password' && !validatePassword(e.target.value))
+      e.target.classList.add('invalidInput');
   };
 
   const handleLogin = async (e) => {
@@ -55,17 +83,27 @@ const Login = () => {
               placeholder='Username'
               name='username'
               onChange={handleChange}
+              onBlur={handleBlur}
             />
             <input
               type='password'
               placeholder='Password'
               name='password'
               onChange={handleChange}
+              onBlur={handleBlur}
             />
 
             <span>{caughtErr && caughtErr}</span>
 
-            <button onClick={handleLogin}>Login</button>
+            <button
+              onClick={handleLogin}
+              disabled={
+                !validateUsername(inputs.username) ||
+                !validatePassword(inputs.password)
+              }
+            >
+              Login
+            </button>
           </form>
         </div>
       </div>

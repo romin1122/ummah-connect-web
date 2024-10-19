@@ -95,10 +95,15 @@
           border: none;
           border-bottom: 1px solid lightgray;
           padding: 20px 10px;
+          transition: 0.5s;
 
           &:focus {
             outline: none;
           }
+        }
+
+        .invalidInput {
+          border-bottom: 2px solid red;
         }
 
         span {
@@ -113,6 +118,10 @@
           color: white;
           font-weight: bold;
           cursor: pointer;
+
+          &:disabled {
+            filter: brightness(120%);
+          }
         }
       }
     }
