@@ -54,32 +54,35 @@ function Post() {
   return (
     <div className='postPage'>
       <div className='container'>
-        <Link
-          to={`/post/${post.uuid}`}
-          style={{ textDecoration: 'none', color: 'inherit' }}
-        >
-          <div className='user'>
-            <div className='userInfo'>
+        <div className='user'>
+          <div className='userInfo'>
+            <Link
+              to={`/profile/${post.username}`}
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <img src={post.profilePic} alt='' />
+            </Link>
+
+            <div className='details'>
               <Link
                 to={`/profile/${post.username}`}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <img src={post.profilePic} alt='' />
+                <span className='name'>{post.name}</span>
               </Link>
-
-              <div className='details'>
-                <Link
-                  to={`/profile/${post.username}`}
-                  style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                  <span className='name'>{post.name}</span>
-                </Link>
-                <span className='date'>{moment(post.createdAt).fromNow()}</span>
-              </div>
+              <span className='date'>{moment(post.createdAt).fromNow()}</span>
             </div>
-            <MoreHoriz />
           </div>
-        </Link>
+
+          <Link
+            to={`/post/${post.uuid}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <div className='emptyContainer'>
+              <MoreHoriz />
+            </div>
+          </Link>
+        </div>
 
         <div className='content'>
           {post.description && <pre>{post.description.trim()}</pre>}
