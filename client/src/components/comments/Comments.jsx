@@ -78,6 +78,12 @@ function Comments({ postUuid }) {
               <div className='date'>{moment(comment.createdAt).fromNow()}</div>
             </div>
           ))}
+
+      {!isLoading && !error && data.length == 0 && (
+        <div className='noComments'>
+          <span>No comments available</span>
+        </div>
+      )}
     </div>
   );
 }

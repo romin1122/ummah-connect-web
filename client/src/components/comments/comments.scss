@@ -1,6 +1,12 @@
 @import '../../style.scss';
 .comments {
   @include themify($themes) {
+    .noComments {
+      color: themed('textColorSoft');
+      display: flex;
+      justify-content: center;
+    }
+
     img {
       width: 40px;
       height: 40px;
