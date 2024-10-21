@@ -67,7 +67,7 @@ function App() {
           element: <Home />,
         },
         {
-          path: '/post/:postId',
+          path: '/post/:postUuid',
           element: <Post />,
         },
         {

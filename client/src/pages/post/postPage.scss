@@ -1,14 +1,23 @@
 @import '../../style.scss';
 
-.post {
+.postPage {
   @include themify($themes) {
     -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
     -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
     box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
 
-    border-radius: 20px;
-    background-color: themed('bg');
+    background-color: themed('bgSoft');
     color: themed('textColor');
+    padding: 0 70px;
+    min-height: calc(100vh - 65px);
+
+    @include tablet {
+      padding: 20px;
+    }
+
+    @include mobile {
+      padding: 10px;
+    }
 
     .loading {
       color: themed('textColor');
@@ -19,7 +28,9 @@
     }
 
     .container {
+      background-color: themed('bg');
       padding: 20px;
+      min-height: calc(100vh - 105px);
 
       .user {
         display: flex;

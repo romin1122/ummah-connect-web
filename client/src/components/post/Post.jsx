@@ -12,7 +12,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { makeRequest } from '../../axiosfunctions';
 
 function Post({ postUuid }) {
-  const [commentOpen, setCommentOpen] = useState(false);
+  // const [commentOpen, setCommentOpen] = useState(false);
 
   const {
     isLoading: postIsLoading,
@@ -52,27 +52,33 @@ function Post({ postUuid }) {
   return (
     <div className='post'>
       <div className='container'>
-        <div className='user'>
-          <div className='userInfo'>
-            <Link
-              to={`/profile/${post.username}`}
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              <img src={post.profilePic} alt='' />
-            </Link>
-
-            <div className='details'>
+        <Link
+          to={`/post/${post.uuid}`}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <div className='user'>
+            <div className='userInfo'>
               <Link
                 to={`/profile/${post.username}`}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <span className='name'>{post.name}</span>
+                <img src={post.profilePic} alt='' />
               </Link>
-              <span className='date'>{moment(post.createdAt).fromNow()}</span>
+
+              <div className='details'>
+                <Link
+                  to={`/profile/${post.username}`}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <span className='name'>{post.name}</span>
+                </Link>
+                <span className='date'>{moment(post.createdAt).fromNow()}</span>
+              </div>
             </div>
+            <MoreHoriz />
           </div>
-          <MoreHoriz />
-        </div>
+        </Link>
+
         <div className='content'>
           {post.description && <pre>{post.description.trim()}</pre>}
           {post.img && <img src={post.img} alt='' />}
@@ -86,16 +92,26 @@ function Post({ postUuid }) {
             )}
             {post.likes} Likes
           </div>
-          <div className='item' onClick={() => setCommentOpen(!commentOpen)}>
-            <TextsmsOutlined />
-            Comments
-          </div>
+
+          <Link
+            to={`/post/${post.uuid}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <div
+              className='item'
+              // onClick={() => setCommentOpen(!commentOpen)}
+            >
+              <TextsmsOutlined />
+              Comments
+            </div>
+          </Link>
+
           <div className='item'>
             <ShareOutlined />
             Share
           </div>
         </div>
-        {commentOpen && <Comments postUuid={post.uuid} />}
+        {/* {commentOpen && <Comments postUuid={post.uuid} />} */}
       </div>
     </div>
   );
