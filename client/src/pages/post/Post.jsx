@@ -10,6 +10,7 @@ import moment from 'moment';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { makeRequest } from '../../axiosfunctions';
 import { useParams } from 'react-router-dom';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 import './postPage.scss';
 
 function Post() {
@@ -86,8 +87,15 @@ function Post() {
 
         <div className='content'>
           {post.description && <pre>{post.description.trim()}</pre>}
-          {post.img && <img src={post.img} alt='' />}
+          {post.img && (
+            <PhotoProvider>
+              <PhotoView key={post.uuid} src={post.img}>
+                <img src={post.img} alt='' />
+              </PhotoView>
+            </PhotoProvider>
+          )}
         </div>
+
         <div className='postInfo'>
           <div className='item' onClick={handleClick}>
             {post.liked ? (

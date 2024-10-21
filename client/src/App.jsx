@@ -19,6 +19,7 @@ import { DarkModeContext } from './context/darkModeContext';
 import { AuthContext } from './context/authContext';
 import Post from './pages/post/Post';
 // import Test from './Test';
+import 'react-photo-view/dist/react-photo-view.css';
 
 function App() {
   const { currentUser } = useContext(AuthContext);

@@ -10,6 +10,7 @@ import { useState } from 'react';
 import moment from 'moment';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { makeRequest } from '../../axiosfunctions';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 
 function Post({ postUuid }) {
   // const [commentOpen, setCommentOpen] = useState(false);
@@ -81,7 +82,13 @@ function Post({ postUuid }) {
 
         <div className='content'>
           {post.description && <pre>{post.description.trim()}</pre>}
-          {post.img && <img src={post.img} alt='' />}
+          {post.img && (
+            <PhotoProvider>
+              <PhotoView key={post.uuid} src={post.img}>
+                <img src={post.img} alt='' />
+              </PhotoView>
+            </PhotoProvider>
+          )}
         </div>
         <div className='info'>
           <div className='item' onClick={handleClick}>
