@@ -85,7 +85,7 @@ function Post() {
           {post.description && <pre>{post.description.trim()}</pre>}
           {post.img && <img src={post.img} alt='' />}
         </div>
-        <div className='info'>
+        <div className='postInfo'>
           <div className='item' onClick={handleClick}>
             {post.liked ? (
               <FavoriteOutlined style={{ color: 'red' }} />
