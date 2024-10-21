@@ -14,6 +14,10 @@ export const AuthContextProvider = ({ children }) => {
   }
   const [currentUser, setCurrentUser] = useState(parsed);
 
+  const refreshUser = () => {
+    makeRequest.get('/users/self').then((res) => setCurrentUser(res.data));
+  };
+
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(currentUser));
   }, [currentUser]);
@@ -23,6 +27,8 @@ export const AuthContextProvider = ({ children }) => {
       if (!res.data) {
         localStorage.removeItem('user');
         setCurrentUser(null);
+      } else {
+        refreshUser();
       }
       return data;
     });

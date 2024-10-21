@@ -1,5 +1,18 @@
 import { db } from '../helpers/db.js';
 
+export const getSelf = (req, res) => {
+  const q =
+    'SELECT * FROM users WHERE username = (SELECT u.username AS username FROM users AS u WHERE u.id = ?)';
+
+  db.query(q, [req.user.id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length == 0) return res.status(404).json('User not found!');
+
+    const { password, id, ...info } = data[0];
+    return res.status(200).json(info);
+  });
+};
+
 export const getUser = (req, res) => {
   const username = req.params.username;
   const q =

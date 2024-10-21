@@ -35,6 +35,7 @@ function Update({ setOpenUpdate, user }) {
         setCoverPic(null);
 
         setOpenUpdate(false);
+        location.replace(location.href);
       },
     }
   );
