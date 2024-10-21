@@ -6,15 +6,15 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-function Comments({ postId }) {
+function Comments({ postUuid }) {
   const { currentUser } = useContext(AuthContext);
 
   const [description, setDescription] = useState('');
 
   const { isLoading, error, data } = useQuery(
-    ['comments', postId],
+    ['comments', postUuid],
     async () => {
-      let res = await makeRequest.get('/comments?postId=' + postId);
+      let res = await makeRequest.get('/comments?postUuid=' + postUuid);
       return res.data;
     }
   );
@@ -27,7 +27,7 @@ function Comments({ postId }) {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['comments', postId]);
+        queryClient.invalidateQueries(['comments', postUuid]);
         setDescription('');
       },
     }
@@ -35,7 +35,7 @@ function Comments({ postId }) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    mutation.mutate({ description, postId });
+    mutation.mutate({ description, postUuid });
   };
 
   return (
@@ -59,7 +59,7 @@ function Comments({ postId }) {
         : error
         ? 'An error occured!'
         : data.map((comment) => (
-            <div className='comment' key={comment.id}>
+            <div className='comment' key={comment.uuid}>
               <Link
                 to={`/profile/${comment.username}`}
                 style={{ textDecoration: 'none', color: 'inherit' }}

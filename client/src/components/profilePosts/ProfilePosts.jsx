@@ -20,9 +20,7 @@ function ProfilePosts({ username }) {
         <div className='error'>{error}</div>
       ) : (
         data.map((post) => {
-          return (
-            <Post postId={post.id} username={post.username} key={post.id} />
-          );
+          return <Post postUuid={post.uuid} key={post.uuid} />;
         })
       )}
     </div>

@@ -11,15 +11,15 @@ import moment from 'moment';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { makeRequest } from '../../axiosfunctions';
 
-function Post({ postId, username }) {
+function Post({ postUuid }) {
   const [commentOpen, setCommentOpen] = useState(false);
 
   const {
     isLoading: postIsLoading,
     postError,
     data: post,
-  } = useQuery(['posts', postId], async () => {
-    let res = await makeRequest.post('/posts/post', { username, postId });
+  } = useQuery(['posts', postUuid], async () => {
+    let res = await makeRequest.post('/posts/post', { postUuid });
     return res.data;
   });
 
@@ -28,13 +28,13 @@ function Post({ postId, username }) {
     () => {
       const res = makeRequest.post('/likes/update', {
         liked: !post.liked,
-        postId: post.id,
+        postUuid: post.uuid,
       });
       return res;
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['posts', postId]);
+        queryClient.invalidateQueries(['posts', postUuid]);
       },
     }
   );
@@ -95,7 +95,7 @@ function Post({ postId, username }) {
             Share
           </div>
         </div>
-        {commentOpen && <Comments postId={post.id} />}
+        {commentOpen && <Comments postUuid={post.uuid} />}
       </div>
     </div>
   );
