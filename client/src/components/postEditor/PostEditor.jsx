@@ -6,6 +6,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import { makeRequest } from '../../axiosfunctions';
 import { useMutation, useQueryClient } from 'react-query';
+import { Link } from 'react-router-dom';
 
 function PostEditor() {
   const { currentUser } = useContext(AuthContext);
@@ -40,7 +41,12 @@ function PostEditor() {
     <div className='postEditor'>
       <div className='top'>
         <div className='left'>
-          <img src={currentUser.profilePic} alt='' />
+          <Link
+            to={`/profile/${currentUser.username}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <img src={currentUser.profilePic} alt='' />
+          </Link>
           <textarea
             name=''
             id=''
