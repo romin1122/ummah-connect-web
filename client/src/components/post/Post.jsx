@@ -5,8 +5,6 @@ import TextsmsOutlined from '@mui/icons-material/TextsmsOutlined';
 import ShareOutlined from '@mui/icons-material/ShareOutlined';
 import MoreHoriz from '@mui/icons-material/MoreHoriz';
 import { Link } from 'react-router-dom';
-import Comments from '../comments/Comments';
-import { useState } from 'react';
 import moment from 'moment';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { makeRequest } from '../../axiosfunctions';

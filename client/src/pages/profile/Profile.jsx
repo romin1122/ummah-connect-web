@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/authContext';
 import Update from '../../components/update/Update';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 
 const Profile = () => {
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -76,22 +77,30 @@ const Profile = () => {
   return (
     <div className='profile'>
       <div className='images'>
-        <img
-          src={
-            isLoading
-              ? ''
-              : userData.coverPic
-              ? userData.coverPic
-              : '/static/defaultCover.png'
-          }
-          alt=''
-          className='cover'
-        />
-        <img
-          src={isLoading ? '/static/defaultProfile.png' : userData.profilePic}
-          alt=''
-          className='profilePicture'
-        />
+        <PhotoProvider>
+          <PhotoView
+            key={userData.username + 'coverPic'}
+            src={
+              userData.coverPic ? userData.coverPic : '/static/defaultCover.png'
+            }
+          >
+            <img
+              src={
+                userData.coverPic
+                  ? userData.coverPic
+                  : '/static/defaultCover.png'
+              }
+              alt=''
+              className='cover'
+            />
+          </PhotoView>
+        </PhotoProvider>
+
+        <PhotoProvider>
+          <PhotoView key={userData.profilePic} src={userData.profilePic}>
+            <img src={userData.profilePic} alt='' className='profilePicture' />
+          </PhotoView>
+        </PhotoProvider>
       </div>
 
       <div className='profileContainer'>
